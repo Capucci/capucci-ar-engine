@@ -1,1 +1,39 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+</head>
+
+<body>
+
+<a-scene 
+  mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 1;"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+>
+
+  <a-assets>
+    <video id="video" src="video.mp4" loop></video>
+  </a-assets>
+
+  <a-camera position="0 0 0"></a-camera>
+
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-video src="#video" position="0 0 0" width="1" height="0.6"></a-video>
+  </a-entity>
+
+</a-scene>
+
+<script>
+const target = document.querySelector("[mindar-image-target]");
+const video = document.querySelector("#video");
+
+target.addEventListener("targetFound", () => video.play());
+target.addEventListener("targetLost", () => video.pause());
+</script>
+
+</body>
+</html>
